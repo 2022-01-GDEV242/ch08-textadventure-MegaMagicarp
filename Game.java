@@ -35,8 +35,7 @@ public class Game
     /**
      * Create the game and initialise its internal map.
      */
-    public Game() 
-    {
+    public Game() {
         createRooms();
         parser = new Parser();
     }
@@ -44,8 +43,7 @@ public class Game
     /**
      * Play the game outside BlueJ.
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Game game = new Game();
         game.play();
     }
@@ -53,17 +51,16 @@ public class Game
     /**
      * Create all the rooms and link their exits together.
      */
-    private void createRooms()
-    {
+    private void createRooms() {
         Room hallway, bedroom, staircase, unknown_world, volcaino, lake, path, cave,
         deep_cave;
       
         // create the rooms
-        hallway = new Room("The hall outside your room.");
+        hallway = new Room("standing in the hall outside your room.");
         bedroom = new Room("In your cosy room, it's a bit messy.");
-        staircase = new Room("rickity old stairs, they seem like they could collaps "
+        staircase = new Room("climbing down rickity old stairs, they seem like they could collaps "
         + "at any minute.");
-        unknown_world = new Room("An unknown world under your stairs.");
+        unknown_world = new Room("in an unknown world under your stairs.");
         volcaino = new Room("A blisteringly hot pool of magma.");
         lake = new Room("A tranquil resivuar. There is lots of unknown plantlife " +
         "surounding the pool.");
@@ -71,6 +68,8 @@ public class Game
         cave = new Room("A chilly cave with water dripping from the celling. You "
         + "hear a faint noise from deep in the cave");
         deep_cave = new Room("A raised section after the curve");
+        
+        currentRoom = bedroom;  // start game in bedroom
         
         // initialise room exits
         bedroom.setExit("east", hallway);
@@ -90,26 +89,22 @@ public class Game
         lake.setExit("north", unknown_world);
         
         cave.setExit("west", unknown_world);
-        cave.setExit("north", deep_cave);
-
-        currentRoom = bedroom;  // start game in bedroom
+        cave.setExit("north_east", deep_cave);
         
-        
+        deep_cave.setExit("south_west", cave);
     }
 
     /**
      *  Main play routine.  Loops until end of play.
      */
-    public void play() 
-    {            
+    public void play() {            
         printWelcome();
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
                 
         boolean finished = false;
-        while (! finished) 
-        {
+        while (! finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
@@ -119,10 +114,9 @@ public class Game
     /**
      * Print out the opening message for the player.
      */
-    private void printWelcome()
-    {
+    private void printWelcome() {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
+        System.out.println("Welcome to the World of !");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
@@ -134,14 +128,12 @@ public class Game
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
      */
-    private boolean processCommand(Command command) 
-    {
+    private boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
 
-        switch (commandWord) 
-        {
+        switch (commandWord) {
             case UNKNOWN:
                 System.out.println("I don't know what you mean...");
                 break;
@@ -172,8 +164,7 @@ public class Game
      * Here we print some stupid, cryptic message and a list of the 
      * command words.
      */
-    private void printHelp() 
-    {
+    private void printHelp() {
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
         System.out.println();
@@ -181,8 +172,7 @@ public class Game
         parser.showCommands();
     }
     
-    private void lookRoom(Command command)
-    {
+    private void lookRoom(Command command) {
         System.out.println(roomDescription);
     }
     
@@ -190,10 +180,8 @@ public class Game
      * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      */
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) 
-        {
+    private void goRoom(Command command) {
+        if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
             return;
@@ -204,12 +192,10 @@ public class Game
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
 
-        if (nextRoom == null) 
-        {
+        if (nextRoom == null) {
             System.out.println("There is no door!");
         }
-        else 
-        {
+        else {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
@@ -222,13 +208,11 @@ public class Game
      */
     private boolean quit(Command command) 
     {
-        if(command.hasSecondWord()) 
-        {
+        if(command.hasSecondWord()) {
             System.out.println("Quit what?");
             return false;
         }
-        else 
-        {
+        else {
             return true;  // signal that we want to quit
         }
     }
