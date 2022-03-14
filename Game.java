@@ -19,7 +19,19 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+    private String roomDescription;
+    private String bedroomDescription = "It's your bedroom. you feel safe here.";
+    private String hallwayDescription = "Being outside of your room is unsettleing."
+    + " The hallway is dark and seems to go on forever";
+    private String stairsDescription = "Old stairs they dont seem very safe.";
+    private String unknownDescription = "Nothing seems familiar here you are surroun"
+    + "ded by tall mountains. One looks to be a volcaino it is due north. There is" +
+    " a lake due south, a cave due east, and a path heading west.";
+    private String lakeDescription;
+    private String caveDescription;
+    private String volcainoDescription;
+    private String pathDescription;
+    
     /**
      * Create the game and initialise its internal map.
      */
@@ -43,30 +55,46 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, bedroom, pub, lab, office;
+        Room hallway, bedroom, staircase, unknown_world, volcaino, lake, path, cave,
+        deep_cave;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        bedroom = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        hallway = new Room("The hall outside your room.");
+        bedroom = new Room("In your cosy room, it's a bit messy.");
+        staircase = new Room("rickity old stairs, they seem like they could collaps "
+        + "at any minute.");
+        unknown_world = new Room("An unknown world under your stairs.");
+        volcaino = new Room("A blisteringly hot pool of magma.");
+        lake = new Room("A tranquil resivuar. There is lots of unknown plantlife " +
+        "surounding the pool.");
+        path = new Room("A path that leads into deep woods");
+        cave = new Room("A chilly cave with water dripping from the celling. You "
+        + "hear a faint noise from deep in the cave");
+        deep_cave = new Room("A raised section after the curve");
         
         // initialise room exits
-        outside.setExit("east", bedroom);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        bedroom.setExit("east", hallway);
+        
+        hallway.setExit("west", bedroom);
+        hallway.setExit("east", staircase);
 
-        bedroom.setExit("west", outside);
+        staircase.setExit("down", unknown_world);
 
-        pub.setExit("east", outside);
+        unknown_world.setExit("north", volcaino);
+        unknown_world.setExit("south", lake);
+        unknown_world.setExit("east", cave);
+        unknown_world.setExit("west", path);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
-
-        office.setExit("west", lab);
+        volcaino.setExit("south", unknown_world);
+        
+        lake.setExit("north", unknown_world);
+        
+        cave.setExit("west", unknown_world);
+        cave.setExit("north", deep_cave);
 
         currentRoom = bedroom;  // start game in bedroom
+        
+        
     }
 
     /**
@@ -129,6 +157,10 @@ public class Game
             case QUIT:
                 wantToQuit = quit(command);
                 break;
+                
+            case LOOK:
+                lookRoom(command);
+                break;
         }
         return wantToQuit;
     }
@@ -148,7 +180,12 @@ public class Game
         System.out.println("Your command words are:");
         parser.showCommands();
     }
-
+    
+    private void lookRoom(Command command)
+    {
+        System.out.println(roomDescription);
+    }
+    
     /** 
      * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
