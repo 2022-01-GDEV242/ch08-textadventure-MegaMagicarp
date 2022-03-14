@@ -30,25 +30,34 @@ public class Game
     }
 
     /**
+     * Play the game outside BlueJ.
+     */
+    public static void main(String[] args)
+    {
+        Game game = new Game();
+        game.play();
+    }
+    
+    /**
      * Create all the rooms and link their exits together.
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room outside, bedroom, pub, lab, office;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
+        bedroom = new Room("in a lecture theater");
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
         
         // initialise room exits
-        outside.setExit("east", theater);
+        outside.setExit("east", bedroom);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
 
-        theater.setExit("west", outside);
+        bedroom.setExit("west", outside);
 
         pub.setExit("east", outside);
 
@@ -57,7 +66,7 @@ public class Game
 
         office.setExit("west", lab);
 
-        currentRoom = outside;  // start game outside
+        currentRoom = bedroom;  // start game in bedroom
     }
 
     /**
@@ -71,7 +80,8 @@ public class Game
         // execute them until the game is over.
                 
         boolean finished = false;
-        while (! finished) {
+        while (! finished) 
+        {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
@@ -102,7 +112,8 @@ public class Game
 
         CommandWord commandWord = command.getCommandWord();
 
-        switch (commandWord) {
+        switch (commandWord) 
+        {
             case UNKNOWN:
                 System.out.println("I don't know what you mean...");
                 break;
@@ -144,7 +155,8 @@ public class Game
      */
     private void goRoom(Command command) 
     {
-        if(!command.hasSecondWord()) {
+        if(!command.hasSecondWord()) 
+        {
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
             return;
@@ -155,10 +167,12 @@ public class Game
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
 
-        if (nextRoom == null) {
+        if (nextRoom == null) 
+        {
             System.out.println("There is no door!");
         }
-        else {
+        else 
+        {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
@@ -171,11 +185,13 @@ public class Game
      */
     private boolean quit(Command command) 
     {
-        if(command.hasSecondWord()) {
+        if(command.hasSecondWord()) 
+        {
             System.out.println("Quit what?");
             return false;
         }
-        else {
+        else 
+        {
             return true;  // signal that we want to quit
         }
     }
