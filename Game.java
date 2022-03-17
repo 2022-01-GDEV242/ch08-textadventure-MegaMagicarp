@@ -53,7 +53,7 @@ public class Game
      */
     private void createRooms() {
         Room hallway, bedroom, staircase, unknown_world, volcaino, lake, path, cave,
-        deep_cave;
+        deep_cave, nest, temple, treasure_room, lab, kitchen, stairs, hall, Bedroom;
       
         // create the rooms
         hallway = new Room("standing in the hall outside your room.");
@@ -68,6 +68,14 @@ public class Game
         cave = new Room("A chilly cave with water dripping from the celling. You "
         + "hear a faint noise from deep in the cave");
         deep_cave = new Room("A raised section after the curve");
+        nest = new Room("");
+        temple = new Room("");
+        treasure_room = new Room("");
+        lab = new Room("");
+        kitchen = new Room("");
+        stairs = new Room("");
+        hall = new Room("");
+        Bedroom = new Room("");
         
         currentRoom = bedroom;  // start game in bedroom
         
@@ -89,9 +97,31 @@ public class Game
         lake.setExit("north", unknown_world);
         
         cave.setExit("west", unknown_world);
-        cave.setExit("north_east", deep_cave);
+        cave.setExit("north east", deep_cave);
         
-        deep_cave.setExit("south_west", cave);
+        deep_cave.setExit("south west", cave);
+        
+        path.setExit("east", unknown_world);
+        path.setExit("west", nest);
+        
+        nest.setExit("north", temple);
+        nest.setExit("east", path);
+        
+        temple.setExit("south", nest);
+        temple.setExit("west", treasure_room);
+        temple.setExit("east", lab);
+        
+        lab.setExit("teleport home", kitchen);
+        lab.setExit("west", temple);
+        
+        kitchen.setExit("east", stairs);
+        
+        stairs.setExit("west", kitchen);
+        stairs.setExit("east", hall);
+        
+        hall.setExit("west", stairs);
+        hall.setExit("east", Bedroom);
+        
     }
 
     /**
@@ -116,7 +146,7 @@ public class Game
      */
     private void printWelcome() {
         System.out.println();
-        System.out.println("Welcome to the World of !");
+        System.out.println("Welcome to your own world!");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
