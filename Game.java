@@ -20,17 +20,6 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private String roomDescription;
-    private String bedroomDescription = "It's your bedroom. you feel safe here.";
-    private String hallwayDescription = "Being outside of your room is unsettleing."
-    + " The hallway is dark and seems to go on forever";
-    private String stairsDescription = "Old stairs they dont seem very safe.";
-    private String unknownDescription = "Nothing seems familiar here you are surroun"
-    + "ded by tall mountains. One looks to be a volcaino it is due north. There is" +
-    " a lake due south, a cave due east, and a path heading west.";
-    private String lakeDescription;
-    private String caveDescription;
-    private String volcainoDescription;
-    private String pathDescription;
     
     /**
      * Create the game and initialise its internal map.
@@ -56,26 +45,29 @@ public class Game
         deep_cave, nest, temple, treasure_room, lab, kitchen, stairs, hall, Bedroom;
       
         // create the rooms
-        hallway = new Room("standing in the hall outside your room.");
-        bedroom = new Room("In your cosy room, it's a bit messy.");
+        hallway = new Room("standing in the hall outside your room.", "Being outside of your room is unsettleing."
+        + " The hallway is dark and seems to go on forever");
+        bedroom = new Room("in your cosy room, it's a bit messy.", "It's your bedroom. You feel safe here.");
         staircase = new Room("climbing down rickity old stairs, they seem like they could collaps "
-        + "at any minute.");
-        unknown_world = new Room("in an unknown world under your stairs.");
-        volcaino = new Room("A blisteringly hot pool of magma.");
-        lake = new Room("A tranquil resivuar. There is lots of unknown plantlife " +
-        "surounding the pool.");
-        path = new Room("A path that leads into deep woods");
-        cave = new Room("A chilly cave with water dripping from the celling. You "
-        + "hear a faint noise from deep in the cave");
-        deep_cave = new Room("A raised section after the curve");
-        nest = new Room("");
-        temple = new Room("");
-        treasure_room = new Room("");
-        lab = new Room("");
-        kitchen = new Room("");
-        stairs = new Room("");
-        hall = new Room("");
-        Bedroom = new Room("");
+        + "at any minute.", "Old stairs they dont seem very safe.");
+        unknown_world = new Room("in an unknown world. You fell through your stairs.", 
+        "Nothing seems familiar here you are surrounded by tall mountains. One looks "+
+        "to be a volcaino it is due north. There is a lake due south, a cave due east, and a path heading west.");
+        volcaino = new Room("standing over a blisteringly hot pool of magma.","");
+        lake = new Room("standing in a clearing with a tranquil resivuar. There is lots of unknown plantlife " +
+        "surounding the pool.","");
+        path = new Room("walking along a path that leads into deep woods","");
+        cave = new Room("staring into a chilly cave with water dripping from the celling. You "
+        + "hear a faint noise from deep in the cave","");
+        deep_cave = new Room("in a raised section after the curve","");
+        nest = new Room("seeing a huge nest, you wonder if it is home to something","");
+        temple = new Room("","");
+        treasure_room = new Room("","");
+        lab = new Room("","");
+        kitchen = new Room("","");
+        stairs = new Room("","");
+        hall = new Room("","");
+        Bedroom = new Room("","");
         
         currentRoom = bedroom;  // start game in bedroom
         
@@ -146,8 +138,8 @@ public class Game
      */
     private void printWelcome() {
         System.out.println();
-        System.out.println("Welcome to your own world!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to a mysterious world!");
+        System.out.println("This is a new, pretty boring adventure game.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
@@ -183,6 +175,10 @@ public class Game
             case LOOK:
                 lookRoom(command);
                 break;
+                
+            case EAT:
+                eat(command);
+                break;
         }
         return wantToQuit;
     }
@@ -195,15 +191,24 @@ public class Game
      * command words.
      */
     private void printHelp() {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("You are lost. You are alone. You wander.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
     }
     
+    /**
+     * prints that you are not hungry right now
+     */
+    private void eat(Command command) {
+        System.out.println("You are not hungry right now.");
+    }
+    
+    /**
+     * print the detailed discription of the room you are in
+     */
     private void lookRoom(Command command) {
-        System.out.println(roomDescription);
+        System.out.println(currentRoom.getDetailedDescription());
     }
     
     /** 
