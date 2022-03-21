@@ -1,16 +1,15 @@
-
 /**
  * Write a description of class object here.
  *
  * @author Jake Kymer
- * @version (a version number or a date)
+ * @version 3/21/22
  */
 public class Item
 {
     private int weight;
     private String description;
     /**
-     * create an item and set its weight and description.
+     * Constructor for objects of class object
      */
     public Item(int weight, String description)
     {
@@ -18,17 +17,13 @@ public class Item
         this.description = description;
     }
     
-    /**
-     * @return Returns the weight of the item.
-     */
-    public int getWeight(){
+    public int getWeight()
+    {
         return weight;
     }
     
-    /**
-     * @return Returns the item description.
-     */
-    public String getDescription(){
+    public String getDescription()
+    {
         return description;
     }
 }

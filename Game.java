@@ -24,7 +24,8 @@ public class Game
     /**
      * Create the game and initialise its internal map.
      */
-    public Game() {
+    public Game() 
+    {
         createRooms();
         parser = new Parser();
     }
@@ -32,7 +33,8 @@ public class Game
     /**
      * Play the game outside BlueJ.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         Game game = new Game();
         game.play();
     }
@@ -40,27 +42,29 @@ public class Game
     /**
      * Create all the rooms and link their exits together.
      */
-    private void createRooms() {
+    private void createRooms() 
+    {
         Room hallway, bedroom, staircase, unknown_world, volcaino, lake, path, cave,
         deep_cave, nest, temple, treasure_room, lab, kitchen, stairs, hall, Bedroom;
         
         Item bed, nothing, dirt, magma, clover, egg, treasure, syringe;
         // create the items
-        bed = new Item(100, "Bed");
-        nothing = new Item(100, "There is nothing to pick up");
-        dirt = new Item(1, "Dirt");
-        magma = new Item(10, "Magma");
-        clover = new Item(1, "Four leaf clover");
-        syringe = new Item(5, "Syinge");
-        treasure = new Item(20,"Treasure");
-        egg = new Item (10, "Dragon egg");
+        bed = new Item(100, "\nItems: Bed");
+        nothing = new Item(100, "\nThere is nothing to pick up");
+        dirt = new Item(1, "\nItems: Dirt");
+        magma = new Item(10, "\nItems: Magma");
+        clover = new Item(1, "\nItems: Four leaf clover");
+        syringe = new Item(5, "\nItems: Syinge");
+        treasure = new Item(20,"\nItems: Treasure");
+        egg = new Item (10, "\nItems: Dragon egg");
         // create the rooms
         hallway = new Room("standing in the hall outside your room.", "Being outside of " +
         "your room is unsettleing. The hallway is dark and seems to go on forever", nothing);
-        bedroom = new Room("in your cosy room, it's a bit messy.", "It's your bedroom. " +
-        "You feel safe here.", bed);
-        staircase = new Room("climbing down rickity old stairs, they seem like they could collaps "
-        + "at any minute.", "Old stairs they dont seem very safe.", nothing);
+        bedroom = new Room("in your cosy room, it's a bit messy.", 
+        "It's your bedroom. You feel safe here.\nItems in room:", bed);
+        staircase = new Room("climbing down rickity old stairs, they seem like they could " +
+        "collaps at any minute.\nItems in room:", "Old stairs they dont seem very safe." +
+        "\nItems in room:", nothing);
         unknown_world = new Room("in an unknown world. You fell through your stairs.", 
         "Nothing seems familiar here you are surrounded by tall mountains. One looks "+
         "to be a volcaino it is due north. There is a lake due south, a cave due east, and a " +
@@ -131,14 +135,16 @@ public class Game
     /**
      *  Main play routine.  Loops until end of play.
      */
-    public void play() {            
+    public void play() 
+    {            
         printWelcome();
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
                 
         boolean finished = false;
-        while (! finished) {
+        while (! finished) 
+        {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
@@ -148,7 +154,8 @@ public class Game
     /**
      * Print out the opening message for the player.
      */
-    private void printWelcome() {
+    private void printWelcome() 
+    {
         System.out.println();
         System.out.println("Welcome to a mysterious world!");
         System.out.println("This is a new, pretty boring adventure game.");
@@ -162,12 +169,14 @@ public class Game
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
      */
-    private boolean processCommand(Command command) {
+    private boolean processCommand(Command command) 
+    {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
 
-        switch (commandWord) {
+        switch (commandWord) 
+        {
             case UNKNOWN:
                 System.out.println("I don't know what you mean...");
                 break;

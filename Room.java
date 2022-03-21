@@ -21,6 +21,7 @@ public class Room
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
     private String detailedDescription;
+    private Item item;
 
     /**
      * Create a room described "description". Initially, it has
@@ -32,6 +33,7 @@ public class Room
     {
         this.description = description;
         this.detailedDescription = detailedDescription;
+        this.item = item;
         exits = new HashMap<>();
     }
 
@@ -94,10 +96,15 @@ public class Room
     /**
      * @return returns the detailed description.
      */
-    public String getDetailedDescription(){
+    public String getDetailedDescription()
+    {
         return detailedDescription;
     }
     
+    public String getItem()
+    {
+        return item.getDescription();
+    }
     
 }
 
