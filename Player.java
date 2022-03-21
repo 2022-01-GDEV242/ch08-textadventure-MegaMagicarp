@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 /**
  * Write a description of class Player here.
  *
@@ -7,20 +7,17 @@
  */
 public class Player
 {
-    // instance variables - replace the example below with your own
     private int strength = 50;
-    private int hands = 2;
-
+    private Arraylist<Item> inventory = new Arraylist<Item>();
+    
     /**
      * Constructor for objects of class Player
      */
     public Player()
     {
+        int inventory;
         strength = 50;
         int weightHeld = 0;
         strength = (strength - weightHeld);
-        
     }
-
-    
 }

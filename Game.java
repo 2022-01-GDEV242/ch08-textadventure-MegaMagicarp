@@ -43,31 +43,43 @@ public class Game
     private void createRooms() {
         Room hallway, bedroom, staircase, unknown_world, volcaino, lake, path, cave,
         deep_cave, nest, temple, treasure_room, lab, kitchen, stairs, hall, Bedroom;
-      
+        
+        Item bed, nothing, dirt, magma, clover, egg, treasure, syringe;
+        // create the items
+        bed = new Item(100, "Bed");
+        nothing = new Item(100, "There is nothing to pick up");
+        dirt = new Item(1, "Dirt");
+        magma = new Item(10, "Magma");
+        clover = new Item(1, "Four leaf clover");
+        syringe = new Item(5, "Syinge");
+        treasure = new Item(20,"Treasure");
+        egg = new Item (10, "Dragon egg");
         // create the rooms
-        hallway = new Room("standing in the hall outside your room.", "Being outside of your room is unsettleing."
-        + " The hallway is dark and seems to go on forever");
-        bedroom = new Room("in your cosy room, it's a bit messy.", "It's your bedroom. You feel safe here.");
+        hallway = new Room("standing in the hall outside your room.", "Being outside of " +
+        "your room is unsettleing. The hallway is dark and seems to go on forever", nothing);
+        bedroom = new Room("in your cosy room, it's a bit messy.", "It's your bedroom. " +
+        "You feel safe here.", bed);
         staircase = new Room("climbing down rickity old stairs, they seem like they could collaps "
-        + "at any minute.", "Old stairs they dont seem very safe.");
+        + "at any minute.", "Old stairs they dont seem very safe.", nothing);
         unknown_world = new Room("in an unknown world. You fell through your stairs.", 
         "Nothing seems familiar here you are surrounded by tall mountains. One looks "+
-        "to be a volcaino it is due north. There is a lake due south, a cave due east, and a path heading west.");
-        volcaino = new Room("standing over a blisteringly hot pool of magma.","");
+        "to be a volcaino it is due north. There is a lake due south, a cave due east, and a " +
+        "path heading west.", dirt);
+        volcaino = new Room("standing over a blisteringly hot pool of magma.","", magma);
         lake = new Room("standing in a clearing with a tranquil resivuar. There is lots of unknown plantlife " +
-        "surounding the pool.","");
-        path = new Room("walking along a path that leads into deep woods","");
+        "surounding the pool.","", clover);
+        path = new Room("walking along a path that leads into deep woods","", nothing);
         cave = new Room("staring into a chilly cave with water dripping from the celling. You "
-        + "hear a faint noise from deep in the cave","");
-        deep_cave = new Room("in a raised section after the curve","");
-        nest = new Room("seeing a huge nest, you wonder if it is home to something","");
-        temple = new Room("","");
-        treasure_room = new Room("","");
-        lab = new Room("","");
-        kitchen = new Room("","");
-        stairs = new Room("","");
-        hall = new Room("","");
-        Bedroom = new Room("","");
+        + "hear a faint noise from deep in the cave","", nothing);
+        deep_cave = new Room("in a raised section after the curve","", egg);
+        nest = new Room("seeing a huge nest, you wonder if it is home to something","", nothing);
+        temple = new Room("","", nothing);
+        treasure_room = new Room("","", treasure);
+        lab = new Room("","", syringe);
+        kitchen = new Room("","", nothing);
+        stairs = new Room("","", nothing);
+        hall = new Room("","", nothing);
+        Bedroom = new Room("","", nothing);
         
         currentRoom = bedroom;  // start game in bedroom
         
