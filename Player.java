@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Player
 {
     private int strength = 50;
-    private Arraylist<Item> inventory = new Arraylist<Item>();
+    private ArrayList<Item> inventory = new ArrayList<Item>();
     
     /**
      * Constructor for objects of class Player
