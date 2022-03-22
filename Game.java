@@ -20,7 +20,8 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private String roomDescription;
-    
+    private Player player;
+    private boolean deadMagma;
     /**
      * Create the game and initialise its internal map.
      */
@@ -28,6 +29,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        player = new Player();
     }
 
     /**
@@ -47,24 +49,23 @@ public class Game
         Room hallway, bedroom, staircase, unknown_world, volcaino, lake, path, cave,
         deep_cave, nest, temple, treasure_room, lab, kitchen, stairs, hall, Bedroom;
         
-        Item bed, nothing, dirt, magma, clover, egg, treasure, syringe;
+        Item bed, dirt, magma, clover, egg, treasure, syringe, nothing;
         // create the items
-        bed = new Item(100, "\nItems: Bed");
-        nothing = new Item(100, "\nThere is nothing to pick up");
-        dirt = new Item(1, "\nItems: Dirt");
-        magma = new Item(10, "\nItems: Magma");
-        clover = new Item(1, "\nItems: Four leaf clover");
-        syringe = new Item(5, "\nItems: Syinge");
-        treasure = new Item(20,"\nItems: Treasure");
-        egg = new Item (10, "\nItems: Dragon egg");
+        bed = new Item(100, "\nBed");
+        dirt = new Item(1, "\nDirt");
+        magma = new Item(10, "\nMagma");
+        clover = new Item(1, "\nFour leaf clover");
+        syringe = new Item(5, "\nSyinge");
+        treasure = new Item(20,"\nTreasure");
+        egg = new Item (10, "\nDragon egg");
+        nothing = new Item(99,"\nThere is nothing to pick up");
         // create the rooms
         hallway = new Room("standing in the hall outside your room.", "Being outside of " +
-        "your room is unsettleing. The hallway is dark and seems to go on forever", nothing);
+        "your room is unsettleing. The hallway is dark and seems to go on forever", null);
         bedroom = new Room("in your cosy room, it's a bit messy.", 
-        "It's your bedroom. You feel safe here.\nItems in room:", bed);
+        "It's your bedroom. You feel safe here.", bed);
         staircase = new Room("climbing down rickity old stairs, they seem like they could " +
-        "collaps at any minute.\nItems in room:", "Old stairs they dont seem very safe." +
-        "\nItems in room:", nothing);
+        "collaps at any minute.", "Old stairs they dont seem very safe.", null);
         unknown_world = new Room("in an unknown world. You fell through your stairs.", 
         "Nothing seems familiar here you are surrounded by tall mountains. One looks "+
         "to be a volcaino it is due north. There is a lake due south, a cave due east, and a " +
@@ -72,18 +73,19 @@ public class Game
         volcaino = new Room("standing over a blisteringly hot pool of magma.","", magma);
         lake = new Room("standing in a clearing with a tranquil resivuar. There is lots of unknown plantlife " +
         "surounding the pool.","", clover);
-        path = new Room("walking along a path that leads into deep woods","", nothing);
+        path = new Room("walking along a path that leads into deep woods","", null);
         cave = new Room("staring into a chilly cave with water dripping from the celling. You "
-        + "hear a faint noise from deep in the cave","", nothing);
+        + "hear a faint noise from deep in the cave","", null);
         deep_cave = new Room("in a raised section after the curve","", egg);
-        nest = new Room("seeing a huge nest, you wonder if it is home to something","", nothing);
-        temple = new Room("","", nothing);
+        nest = new Room("seeing a huge nest, you wonder if it is home to" +
+        "something.", "It's a nest made of sticks and other natural materials.", null);
+        temple = new Room("","", null);
         treasure_room = new Room("","", treasure);
         lab = new Room("","", syringe);
-        kitchen = new Room("","", nothing);
-        stairs = new Room("","", nothing);
-        hall = new Room("","", nothing);
-        Bedroom = new Room("","", nothing);
+        kitchen = new Room("","", null);
+        stairs = new Room("","", null);
+        hall = new Room("","", null);
+        Bedroom = new Room("","", bed);
         
         currentRoom = bedroom;  // start game in bedroom
         
@@ -143,7 +145,7 @@ public class Game
         // execute them until the game is over.
                 
         boolean finished = false;
-        while (! finished) 
+        while (! finished && ! deadMagma) 
         {
             Command command = parser.getCommand();
             finished = processCommand(command);
@@ -200,6 +202,10 @@ public class Game
             case EAT:
                 eat(command);
                 break;
+                
+            case TAKE:
+                take(command);
+                break;
         }
         return wantToQuit;
     }
@@ -216,6 +222,44 @@ public class Game
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
+    }
+    
+    private void take(Command command)
+    {
+        if (currentRoom.hasItem() == false)
+        {
+            System.out.println("There is nothing to pick up");
+            return;
+        }
+        if (currentRoom.getItemWeight() == 100)
+        {
+            System.out.println("Item is too heavy to carry");
+        }
+        else if(currentRoom.getItemWeight() == 99)
+        {
+            System.out.println("There is nothing to pick up");
+        }
+        else
+        {
+            Item tempItem = currentRoom.getItem();
+            if (tempItem.getDescription().contains("Magma"))
+            {
+                if (player.hasClover())
+                {
+                    System.out.println("yes");
+                }
+                else
+                {
+                    System.out.println("no");
+                }
+                //set end game here
+                deadMagma = true;
+            }
+            else
+            {
+                player.takeItem(tempItem);
+            }
+        }
     }
     
     /**

@@ -74,9 +74,10 @@ public class Room
      */
     private String getExitString()
     {
-        String returnString = "Exits:";
+        String returnString = "Items: " + (item != null? item.getDescription(): "There is nothing here") + "\nExits:";
         Set<String> keys = exits.keySet();
-        for(String exit : keys) {
+        for(String exit : keys) 
+        {
             returnString += " " + exit;
         }
         return returnString;
@@ -101,10 +102,32 @@ public class Room
         return detailedDescription;
     }
     
-    public String getItem()
+    public String getItemDescription()
     {
         return item.getDescription();
     }
     
+    public int getItemWeight()
+    {
+        return item.getWeight();
+    }
+    
+    public Item getItem()
+    {
+        Item itemReturn;
+        itemReturn = this.item;
+        this.item = null;
+        return itemReturn;
+    }
+    
+    public boolean hasItem()
+    {
+        if (item == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 }
 
