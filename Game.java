@@ -11,8 +11,8 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Jake Kymer
+ * @version 3.24.2022
  */
 
 public class Game 
@@ -70,22 +70,21 @@ public class Game
         "Nothing seems familiar here you are surrounded by tall mountains. One looks "+
         "to be a volcaino it is due north. There is a lake due south, a cave due east, and a " +
         "path heading west.", dirt);
-        volcaino = new Room("standing over a blisteringly hot pool of magma.","", magma);
+        volcaino = new Room("standing over a blisteringly hot pool of magma.","Sweat drips from your brow as you stand over a magma pool.", magma);
         lake = new Room("standing in a clearing with a tranquil resivuar. There is lots of unknown plantlife " +
-        "surounding the pool.","", clover);
-        path = new Room("walking along a path that leads into deep woods","", null);
-        cave = new Room("staring into a chilly cave with water dripping from the celling. You "
-        + "hear a faint noise from deep in the cave","", null);
-        deep_cave = new Room("in a raised section after the curve","", egg);
+        "surounding the pool.","The water looks chilly, there seems to be an unknown source of ripples coming from the center of the lake.", clover);
+        path = new Room("walking along a path that leads into deep woods","You are surrounded buy trees.", null);
+        cave = new Room("staring into a chilly cave with water dripping from the celling." ,"There are many stalactights and stalagmites all around the cave. The cave seems to turn at the end.", null);
+        deep_cave = new Room("in a raised section after the curve","There is an unknown egg on a ledge.", egg);
         nest = new Room("seeing a huge nest, you wonder if it is home to" +
         "something.", "It's a nest made of sticks and other natural materials.", null);
-        temple = new Room("","", null);
-        treasure_room = new Room("","", treasure);
-        lab = new Room("","", syringe);
-        kitchen = new Room("","", null);
-        stairs = new Room("","", null);
-        hall = new Room("","", null);
-        Bedroom = new Room("","", bed);
+        temple = new Room("a temple that looks like it was built by an ancent civilization","The temple is very dark inside you can see multiple rooms around you.", null);
+        treasure_room = new Room("a well lit treasure room, you are surounded by treasure.","It is more treasure then you have ever seen, you feel like taking a little should be ok.", treasure);
+        lab = new Room("in a lab that seems to be used to be used for experiments","You are surrounded by test tubes, one labeled 'teleport' is glowing.", syringe);
+        kitchen = new Room("in your kitchen","It feels good to be home.", null);
+        stairs = new Room("climbing up the stairs to your room.","Thats weird didnt your stairs collaps out from under you?", null);
+        hall = new Room("in the hallway outside your room.","there is a faint glow coming from your room it must be your night light.", null);
+        Bedroom = new Room("in your bed room. You brethe a sigh of releaf that was some adventure.","You wake up from your sleep. Man it was all a dream, you check your pockets and find all the stuff you had collected on your adventure, maybe it wasn't a dream after all.", bed);
         
         currentRoom = bedroom;  // start game in bedroom
         
@@ -224,6 +223,9 @@ public class Game
         parser.showCommands();
     }
     
+    /**
+     * Adds the item from the room into your inventory. If player tries to pick up magma, the game ends and the player needs to restart. 
+     */
     private void take(Command command)
     {
         if (currentRoom.hasItem() == false)
@@ -246,11 +248,11 @@ public class Game
             {
                 if (player.hasClover())
                 {
-                    System.out.println("yes");
+                    System.out.println("You take the four leaf clover out of your pocket and kiss it hoping it gives you luck. You reach out and try to pick up some magma, but it butns you to a crisp. I guess this worlds clovers aren't lucky.");
                 }
                 else
                 {
-                    System.out.println("no");
+                    System.out.println("The magma burns you to a crisp. It was not a good idea to pick up magma. Hmmm maybe if you were lucky...");
                 }
                 //set end game here
                 deadMagma = true;
