@@ -12,8 +12,8 @@ import java.util.Iterator;
  * connected to other rooms via exits.  For each existing exit, the room 
  * stores a reference to the neighboring room.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Jake Kymer
+ * @version 3.24.2022
  */
 
 public class Room 
@@ -102,16 +102,26 @@ public class Room
         return detailedDescription;
     }
     
+    /**
+     * @return Returns the item description
+     */
     public String getItemDescription()
     {
         return item.getDescription();
     }
     
+    /**
+     * @return Returns the item weight.
+     */
     public int getItemWeight()
     {
         return item.getWeight();
     }
     
+    /**
+     * Makes a new Item object and sets the item in the room to be null
+     * @return Returns the itemReturn Item.
+     */
     public Item getItem()
     {
         Item itemReturn;
@@ -120,12 +130,17 @@ public class Room
         return itemReturn;
     }
     
+    /**
+     * if the room has an item in it, it returns as true, if not it returns as false.
+     */
     public boolean hasItem()
     {
-        if (item == null){
+        if (item == null)
+        {
             return false;
         }
-        else{
+        else
+        {
             return true;
         }
     }

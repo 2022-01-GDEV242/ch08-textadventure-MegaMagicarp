@@ -1,5 +1,5 @@
 /**
- * Write a description of class object here.
+ * The Item class has two parramiters an int for weight and a String for the description.
  *
  * @author Jake Kymer
  * @version 3/21/22
@@ -10,7 +10,7 @@ public class Item
     private String description;
     private boolean pickedUp;
     /**
-     * Constructor for objects of class object
+     * creates an Item object.
      */
     public Item(int weight, String description)
     {
@@ -19,21 +19,32 @@ public class Item
         pickedUp = false;
     }
     
+    /**
+     * when called changes pickedUp to be true.
+     */
     public void setPickedUp()
     {
         pickedUp = true;
     }
     
+    /**
+     * @return Returns the weight of the item
+     */
     public int getWeight()
     {
         return weight;
     }
     
+    /**
+     * @return Returns the decription of the item.
+     */
     public String getDescription()
     {
         return description;
     }
-    
+    /**
+     * @return Returns the pickedUp boolean.
+     */
     public boolean getPickedUp()
     {
         return pickedUp;
